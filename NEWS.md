@@ -1,3 +1,26 @@
+# qvirus 0.0.3
+
+## New Features
+* **InteractionClassification**:
+  - Added new functionalities to the `InteractionClassification` class, enhancing its capabilities for modeling quantum simulations. [InteractionClassification.R, create_interactions.R, mse.InteractionClassification.R, plot.InteractionClassification.R, print.InteractionClassification.R, summary.InteractionClassification.R]
+
+* **New Functions**:
+  - Introduced `nearest_payoff` and `estimate_payoffs` functions to assist in quantum simulation modeling. [nearest_payoff.R, estimate_payoffs.R]
+  
+* **Documentation Updates**:
+  - Enhanced function documentation across various files, ensuring better clarity on usage and functionality. [pure_qubit1.R, pure_qubit2.R]
+  
+## Minor Updates
+* **Data Handling**:
+  - Improved functionalities for handling interaction class objects in `data.R`.
+
+* **Documentation and Metadata**:
+  - Updated DOI references in the `phen_hiv` function to ensure accurate citations. [phen_hiv.R]
+
+## Bug Fixes
+* **simulate_entanglement**:
+  - Resolved issues for CRAN submission and improved the function’s stability and performance. [simulate_entanglement.R]
+
 # qvirus 0.0.2
 
 * Initial CRAN submission.

@@ -1,7 +1,7 @@
 Package: qvirus
 Title: Quantum Computing for Analyzing CD4 Lymphocytes and
         Antiretroviral Therapy
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: 
     person("Juan Pablo", "Acuña González", , "acua6307@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0009-0003-6029-6560"))
@@ -9,15 +9,19 @@ Description: Resources, tutorials, and code snippets dedicated to exploring the 
 License: MIT + file LICENSE
 Encoding: UTF-8
 RoxygenNote: 7.3.2
-Suggests: bookdown, knitr, qsimulatR, rmarkdown, testthat (>= 3.0.0)
+Suggests: baguette, bookdown, earth, kknn, knitr, qsimulatR, rmarkdown,
+        rules, testthat (>= 3.0.0), vdiffr, viralmodels, yardstick
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 URL: https://github.com/juanv66x/qvirus
 BugReports: https://github.com/juanv66x/qvirus/issues
+Depends: R (>= 2.10)
+LazyData: true
+Imports: dplyr, factoextra, ggplot2, gridExtra, stats
 NeedsCompilation: no
-Packaged: 2024-08-21 06:12:19 UTC; jp
+Packaged: 2024-10-26 21:07:27 UTC; jp
 Author: Juan Pablo Acuña González [aut, cre, cph]
     (<https://orcid.org/0009-0003-6029-6560>)
 Maintainer: Juan Pablo Acuña González <acua6307@gmail.com>
 Repository: CRAN
-Date/Publication: 2024-08-26 15:50:02 UTC
+Date/Publication: 2024-10-26 21:30:02 UTC

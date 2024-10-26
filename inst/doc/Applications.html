@@ -364,23 +364,23 @@ display: none;
 
 <div id="TOC">
 <ul>
-<li><a href="#quantum-game-theory" id="toc-quantum-game-theory"><span class="toc-section-number">0.1</span> Quantum Game Theory</a></li>
-<li><a href="#implementation-of-quantum-game-theory-simulator" id="toc-implementation-of-quantum-game-theory-simulator"><span class="toc-section-number">0.2</span> Implementation of Quantum Game Theory Simulator</a></li>
-<li><a href="#hiv-1-phenotypes" id="toc-hiv-1-phenotypes"><span class="toc-section-number">0.3</span> HIV-1 Phenotypes</a></li>
-<li><a href="#implementation-in-qvirus" id="toc-implementation-in-qvirus"><span class="toc-section-number">0.4</span> Implementation in qvirus</a></li>
+<li><a href="#quantum-game-theory" id="toc-quantum-game-theory"><span class="toc-section-number">1</span> Quantum Game Theory</a></li>
+<li><a href="#implementation-of-quantum-game-theory-simulator" id="toc-implementation-of-quantum-game-theory-simulator"><span class="toc-section-number">2</span> Implementation of Quantum Game Theory Simulator</a></li>
+<li><a href="#hiv-1-phenotypes" id="toc-hiv-1-phenotypes"><span class="toc-section-number">3</span> HIV-1 Phenotypes</a></li>
+<li><a href="#implementation-in-qvirus" id="toc-implementation-in-qvirus"><span class="toc-section-number">4</span> Implementation in qvirus</a></li>
 </ul>
 </div>
 
-<div id="quantum-game-theory" class="section level2" number="0.1">
-<h2><span class="header-section-number">0.1</span> Quantum Game Theory</h2>
+<div id="quantum-game-theory" class="section level2" number="1">
+<h2><span class="header-section-number">1</span> Quantum Game Theory</h2>
 <p>HIV-1 (Human Immunodeficiency Virus) is a highly mutable virus that causes AIDS (Acquired Immunodeficiency Syndrome) by weakening the immune system. Current antiretroviral treatments focus on inhibiting viral maturation, but the virus’s rapid mutation leads to treatment resistance. To address this challenge, a quantum game theory approach is proposed to model the competition and evolution of HIV-1 phenotypes <span class="citation">(Başer 2022)</span>.</p>
 <ul>
 <li><p>Classical Approaches: Historically, research on HIV-1 evolution has utilized classical physics-based models, such as agent-based modeling, differential equations, Markov models, and classical game theory.</p></li>
 <li><p>Quantum Perspective: Recognizing that molecular-level interactions follow quantum mechanics rules, this study employs quantum computation to analyze HIV-1 phenotypes’ behaviors.</p></li>
 </ul>
 </div>
-<div id="implementation-of-quantum-game-theory-simulator" class="section level2" number="0.2">
-<h2><span class="header-section-number">0.2</span> Implementation of Quantum Game Theory Simulator</h2>
+<div id="implementation-of-quantum-game-theory-simulator" class="section level2" number="2">
+<h2><span class="header-section-number">2</span> Implementation of Quantum Game Theory Simulator</h2>
 <p>The <code>QGameTheory</code> package facilitates simulations of quantum game theory models. It utilizes a quantum circuit model, allowing computations with up to six qubits <span class="citation">(Ghosh 2020)</span>. Key functionalities include:</p>
 <ul>
 <li><p>Quantum State Initialization: Users can define quantum states and perform measurements, visualized through probability distribution plots.</p></li>
@@ -389,8 +389,8 @@ display: none;
 <p>Advanced Analysis: Functions like Iterated Deletion of Strictly Dominated Strategies (IDSDS) and Nash equilibrium calculations enhance strategic analysis within quantum game contexts.</p></li>
 </ul>
 </div>
-<div id="hiv-1-phenotypes" class="section level2" number="0.3">
-<h2><span class="header-section-number">0.3</span> HIV-1 Phenotypes</h2>
+<div id="hiv-1-phenotypes" class="section level2" number="3">
+<h2><span class="header-section-number">3</span> HIV-1 Phenotypes</h2>
 <ul>
 <li><p>Phenotype Competition: The study analyzes four HIV-1 phenotypes, each representing stages of replication, mutation, and selection. Evolutionary game theory principles are applied to understand their competitive dynamics.</p></li>
 <li><p>Quantum Game Analysis: By integrating quantum perspectives, stable states and competitive scenarios among HIV-1 phenotypes are examined. This approach provides deeper insights into evolutionary strategies and potential treatment vulnerabilities.</p></li>
@@ -453,8 +453,8 @@ U^{-1} = \frac{1}{\sqrt{2}} (I^{\otimes 2} - i \sigma_x^{\otimes 2})
 <p>In quantum game theory, strategies are represented by unitary operators. Unitary operators are essentially transformations that can be applied to quantum states without changing their length or causing information loss. In the context of the Quantum Penny Flip game, the unitary operators <span class="math inline">\(U\)</span> and <span class="math inline">\(U^{-1}\)</span> represent the strategies available to the players (Alice and Bob).</p>
 <p>The unitary matrix <span class="math inline">\(U\)</span> is designed to give equal probability to each quantum move, ensuring fairness in the game.</p>
 </div>
-<div id="implementation-in-qvirus" class="section level2" number="0.4">
-<h2><span class="header-section-number">0.4</span> Implementation in qvirus</h2>
+<div id="implementation-in-qvirus" class="section level2" number="4">
+<h2><span class="header-section-number">4</span> Implementation in qvirus</h2>
 <pre class="r"><code>library(qvirus)</code></pre>
 <p>The <code>phen_hiv</code> function returns the final stage and payoffs of a quantum game of HIV phenotype.</p>
 <pre class="r"><code>library(qsimulatR)

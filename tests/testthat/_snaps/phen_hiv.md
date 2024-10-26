@@ -1,4 +1,4 @@
-# `phen_hiv()` works as expected
+# phen_hiv() works as expected
 
     Code
       print(phen_hiv(strategy1, strategy2, alpha, beta, gamma, theta))

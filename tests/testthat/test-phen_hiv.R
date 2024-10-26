@@ -1,4 +1,4 @@
-test_that("`phen_hiv()` works as expected", {
+test_that("phen_hiv() works as expected", {
   library(qsimulatR)
   strategy1 <- diag(2) # Identity matrix for strategy 1
   strategy2 <- diag(2) # Identity matrix for strategy 2
