@@ -2,30 +2,18 @@
 % Please edit documentation in R/summary.InteractionClassification.R
 \name{summary.InteractionClassification}
 \alias{summary.InteractionClassification}
-\title{Summarize Interaction Classification Results}
+\title{Summarize an InteractionClassification object}
 \usage{
 \method{summary}{InteractionClassification}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{InteractionClassification} containing
-the classified data and clustering results.}
+\item{object}{An object of class \code{InteractionClassification} returned by the
+\code{\link[=InteractionClassification]{InteractionClassification()}} function.}
 
 \item{...}{Additional arguments passed to other methods (currently not used).}
 }
-\value{
-A data frame summarizing the mean viral load differences and CD4
-count differences for each classification, along with the count
-of observations in each classification.
-}
 \description{
-This function calculates and summarizes the mean viral load differences
-and CD4 count differences for each classification in the Interaction
-Classification object.
-}
-\examples{
-data(vl_3)
-data(cd_3)
-interaction_obj <- create_interactions(cd_3[,-1], vl_3[,-1])
-class_obj <- InteractionClassification(interaction_obj$vlogs_diff, interaction_obj$cds_diff)
-summary(class_obj)
+Computes summary statistics by classification group from an object of class
+\code{InteractionClassification}, including mean differences in viral load and CD4 counts,
+and the number of observations per cluster.
 }

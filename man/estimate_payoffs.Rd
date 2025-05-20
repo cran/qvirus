@@ -4,18 +4,13 @@
 \alias{estimate_payoffs}
 \title{Estimate Payoff Parameters for HIV Phenotype Interactions}
 \usage{
-estimate_payoffs(class_obj, predictions_df)
+estimate_payoffs(object, predictions)
 }
 \arguments{
-\item{class_obj}{An object of class \code{InteractionClassification} containing
+\item{object}{An object of class \code{InteractionClassification} containing
 the data on viral load differences and CD4 counts.}
 
-\item{predictions_df}{A data frame containing predictions of viral loads,
-with a column named \code{predictions}. This data frame should align with the
-classifications in \code{class_obj}.}
-}
-\value{
-A payoffs object containing the estimated payoff parameters
+\item{predictions}{A \code{data.frame} containing predictions of viral loads or CD4 values.}
 }
 \description{
 This function estimates the payoff parameters for HIV phenotype interactions
@@ -24,27 +19,14 @@ load model. It calculates the mean differences in viral loads and CD4 counts,
 as well as the average payoffs for each classification.
 }
 \examples{
-\dontrun{
-library(dplyr)
-library(earth)
-library(baguette)
-library(rules)
-library(kknn)
-library(viralmodels)
-# Load required data
-data(vl_3)
+set.seed(42)
 data(cd_3)
-
-# Create interaction object and classification
-interaction_obj <- create_interactions(cd_3[,-1], vl_3[,-1])
-class_obj <- InteractionClassification(interaction_obj$vlogs_diff, interaction_obj$cds_diff)
-
-# Prepare predictions
-traindata <- interaction_obj[c(2, 5)] |> as_tibble()
-target <- "vlogs_diff"
-predictions_df <- viralpreds(target, 2, 1, 2, 123, traindata)
-
-# Estimate payoffs
-payoffs_results <- estimate_payoffs(class_obj, predictions_df)
-}
+cd_data <- cd_3[,-1]
+cd_result <- cds_diff(cd_data)
+data(vl_3)
+vl_data <- vl_3[,-1]
+vl_result <- vlogs_diff(vl_data)
+result <- InteractionClassification(cd_result = cd_result, vl_result = vl_result)
+data(preds)
+payoffs_results <- estimate_payoffs(result, preds)
 }

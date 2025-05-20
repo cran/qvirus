@@ -7,47 +7,58 @@
 #' @param object An object of class \code{InteractionClassification} containing 
 #'               the classified data and clustering results.
 #' @param ... Additional arguments passed to other methods (currently not used).
-#'
-#' @return A list containing the MSE for viral load differences
-#'         (\code{vlogs_mse}) and CD4 count differences (\code{cds_mse}).
+#' 
+#' @return A `data.frame` containing the MSE for CD4 count differences (\code{mse_cds_diff})
+#'         and (\code{mse_vlogs_diff}) for viral load differences.
 #' @export
 #'
 #' @examples
-#' data(vl_3)
+#' set.seed(42)
 #' data(cd_3)
-#' interaction_obj <- create_interactions(cd_3[,-1], vl_3[,-1])
-#' class_obj <- InteractionClassification(interaction_obj$vlogs_diff, interaction_obj$cds_diff)
-#' mse(class_obj)
+#' cd_data <- cd_3[,-1]
+#' cd_result <- cds_diff(cd_data)
+#' data(vl_3)
+#' vl_data <- vl_3[,-1]
+#' vl_result <- vlogs_diff(vl_data)
+#' result <- InteractionClassification(cd_result = cd_result, vl_result = vl_result)
+#' mse(result)
 #' 
 #' @export
 mse <- function(object, ...) {
   UseMethod("mse")
 }
 
-#' Mean Squared Errors method for the InteractionClassification class
+#' Mean Squared Errors for Interaction Classification
 #'
-#' This method computes the mean squared errors (MSE) for viral load and CD4 differences
-#' based on the classification results from an InteractionClassification object.
+#' Mean squared errors (MSE) for viral load differences
+#' and CD4 count differences by comparing the actual values with the group means 
+#' from the classification.
 #'
-#' @param object An object of class \code{InteractionClassification}.
-#' @param ... Additional arguments (currently not used).
+#' @param object An object of class \code{InteractionClassification} containing 
+#'               the classified data and clustering results.
+#' @param ... Additional arguments passed to other methods (currently not used).
 #' @exportS3Method mse InteractionClassification
-mse.InteractionClassification <- function(object, ...) {
-  group_means <- summary(object)
+mse.InteractionClassification <- function(object, ...){
+  group_means <- summary.InteractionClassification(object)
   
-  merged_result <- object$data |> 
-    dplyr::left_join(group_means, by = "classification") |> 
-    dplyr::mutate(
-      vlogs_diff_e = vl_diff - vlogs_diff_mean, 
-      cds_diff_e = cd_diff - cds_diff_mean,
-      vlogs_diff_se = (vlogs_diff_e)^2, 
-      cds_diff_se = (cds_diff_e)^2
-    )
+  merged_result <-  
+    magrittr::`%>%`(magrittr::`%>%`(magrittr::`%>%`(object, dplyr::left_join(group_means, by = "classification")),
+                                    dplyr::mutate(
+                                      cds_diff_e = cds3_diff - cds_diff_mean,
+                                      vlogs_diff_e = vlogs3_diff - vlogs_diff_mean, 
+                                      cds_diff_se = (cds_diff_e)^2,
+                                      vlogs_diff_se = (vlogs_diff_e)^2
+                                    )
+    ),
+    dplyr::summarise(
+      mse_cds_diff = mean(cds_diff_se), 
+      mse_vlogs_diff = mean(vlogs_diff_se), 
+      n = dplyr::n(),
+      .groups = 'drop'
+    ))
+  class(merged_result) <- c("mse.InteractionClassification", "data.frame")
   
-  list(
-    vlogs_mse = mean(merged_result$vlogs_diff_se, na.rm = TRUE),
-    cds_mse = mean(merged_result$cds_diff_se, na.rm = TRUE)
-  )
+  return(merged_result)  
 }
 
-utils::globalVariables(c("cd_diff", "cds_diff_mean", "cds_diff_e", "vl_diff", "vlogs_diff_mean", "vlogs_diff_e"))
+utils::globalVariables(c("cds3_diff", "cds_diff_mean", "cds_diff_e", "cds_diff_se", "vlogs3_diff", "vlogs_diff_mean", "vlogs_diff_e", "vlogs_diff_se"))

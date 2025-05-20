@@ -2,41 +2,41 @@
 % Please edit documentation in R/InteractionClassification.R
 \name{InteractionClassification}
 \alias{InteractionClassification}
-\title{Interaction Classification for Viral Load and CD4 Differences}
+\title{Classify HIV phenotype interactions using k-means clustering}
 \usage{
-InteractionClassification(vl_diff, cd_diff, k = 4, ns = 100, seed = 123)
+InteractionClassification(cd_result, vl_result, k = 4, ns = 100, seed = 123)
 }
 \arguments{
-\item{vl_diff}{A numeric vector of viral load differences.}
+\item{cd_result}{A numeric vector of differences in CD4 T-cell counts.}
 
-\item{cd_diff}{A numeric vector of CD4 count differences.}
+\item{vl_result}{A numeric vector of differences in log viral load.}
 
-\item{k}{An integer specifying the number of clusters (default is 4).}
+\item{k}{Integer. The number of clusters to use in k-means. Default is 4.}
 
-\item{ns}{An integer specifying the number of random starts for the
-k-means algorithm (default is 100).}
+\item{ns}{Integer. Number of random initializations for the k-means algorithm. Default is 100.}
 
-\item{seed}{An integer seed for reproducibility of the clustering
-results (default is 123).}
+\item{seed}{Integer. Seed for random number generation to ensure reproducibility. Default is 123.}
 }
 \value{
-An S3 object of class \code{InteractionClassification}, containing:
-\item{data}{A data frame with the original differences and their
-corresponding cluster classifications.}
-\item{kmeans_result}{The result of the k-means clustering, including
-cluster centers and within-cluster sum of squares.}
-\item{centers}{A matrix of the cluster centers.}
-\item{k}{The number of clusters used in the clustering.}
+A \code{data.frame} of class \code{InteractionClassification} with three columns:
+\describe{
+\item{cds3_result}{The CD4 count difference for each interaction.}
+\item{vlogs3_result}{The viral load difference (log scale) for each interaction.}
+\item{classification}{An integer label (1 to \code{k}) indicating the interaction cluster.}
+}
 }
 \description{
-This function performs k-means clustering on viral load and CD4 count
-differences to classify interactions into distinct groups. It returns
-an S3 object containing the clustering results and means for each
-cluster.
+This function performs k-means clustering on the differences in viral load and CD4 counts
+to classify interaction types between HIV phenotypes. It returns an object of class
+\code{InteractionClassification}, a \code{data.frame} with classification labels.
 }
 \examples{
-data(vl_3)
+set.seed(42)
 data(cd_3)
-interaction_obj <- create_interactions(cd_3[,-1], vl_3[,-1])
-class_obj <- InteractionClassification(interaction_obj$vlogs_diff, interaction_obj$cds_diff)
+cd_data <- cd_3[,-1]
+cd_result <- cds_diff(cd_data)
+data(vl_3)
+vl_data <- vl_3[,-1]
+vl_result <- vlogs_diff(vl_data)
+result <- InteractionClassification(cd_result = cd_result, vl_result = vl_result)
 }

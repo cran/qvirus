@@ -2,53 +2,38 @@
 % Please edit documentation in R/payoffs_list.R
 \name{payoffs_list}
 \alias{payoffs_list}
-\title{Generate Payoff List Based on Quantum Gates and Parameters}
+\title{Compute Payoff Values for Quantum HIV Phenotype Interactions}
 \usage{
 payoffs_list(gates, alpha, beta, gamma, theta, alpha2, beta2, gamma2, theta2)
 }
 \arguments{
-\item{gates}{A named list of gate matrices. Each element of the list is a quantum gate matrix
-(e.g., T, X, Id, H, Z, S, Y). The names of the list elements are used to create payoff names dynamically.}
+\item{gates}{A named list of 2x2 unitary matrices representing quantum strategies (e.g., I, H, Z).}
 
-\item{alpha}{Numeric value for the first parameter set, defining payoff for v×v.}
+\item{alpha}{Numeric scalar, payoff coefficient for phenotype \code{v} when both play \code{0}.}
 
-\item{beta}{Numeric value for the first parameter set, defining payoff for v×V.}
+\item{beta}{Numeric scalar, payoff coefficient for phenotype \code{v} when \code{v} plays \code{0}, \code{V} plays \code{1}.}
 
-\item{gamma}{Numeric value for the first parameter set, defining payoff for V×v.}
+\item{gamma}{Numeric scalar, payoff coefficient for phenotype \code{v} when \code{v} plays \code{1}, \code{V} plays \code{0}.}
 
-\item{theta}{Numeric value for the first parameter set, defining payoff for V×V.}
+\item{theta}{Numeric scalar, payoff coefficient for phenotype \code{v} and \code{V} when both play \code{1}.}
 
-\item{alpha2}{Numeric value for the second parameter set, defining payoff for v×v.}
+\item{alpha2}{Numeric scalar, alternate value of \code{alpha} for phenotype \code{v} in a second scenario.}
 
-\item{beta2}{Numeric value for the second parameter set, defining payoff for v×V.}
+\item{beta2}{Numeric scalar, alternate value of \code{beta} for phenotype \code{v} in a second scenario.}
 
-\item{gamma2}{Numeric value for the second parameter set, defining payoff for V×v.}
+\item{gamma2}{Numeric scalar, alternate value of \code{gamma} for phenotype \code{v} in a second scenario.}
 
-\item{theta2}{Numeric value for the second parameter set, defining payoff for V×V.}
-}
-\value{
-A list of payoffs where the list names correspond to the gate combinations,
-and the values represent the computed payoffs based on the input parameters and gate matrices.
+\item{theta2}{Numeric scalar, alternate value of \code{theta} for phenotype \code{v} in a second scenario.}
 }
 \description{
-This function generates a list of payoffs for different combinations of quantum gate matrices.
-The payoffs are computed for two sets of parameters, where each set defines different values
-for the phenotype payoffs (v and V) in the quantum game model. The names of the payoffs are
-dynamically generated based on the provided gate names.
+Computes payoff values for all pairwise combinations of quantum gate strategies provided in
+a named list. For each pair, the function calculates the payoffs for both phenotypes \code{v} and \code{V}
+using two different sets of payoff parameters.
 }
 \examples{
-library(qsimulatR)
-gates <- list(
-  T = Tgate(2),
-  X = X(2),
-  Id = Id(2),
-  H = H(2),
-  Z = Z(2),
-  S = S(2),
-  Y = Y(2)
-)
-alpha <- 0.5; beta <- 0.2; gamma <- 0.3; theta <- 0.1
-alpha2 <- 0.6; beta2 <- 0.25; gamma2 <- 0.35; theta2 <- 0.15
-payoffs_list <- payoffs_list(gates, alpha, beta, gamma, theta, alpha2, beta2, gamma2, theta2)
-print(payoffs_list)
+I <- diag(2)
+H <- 1 / sqrt(2) * matrix(c(1, 1, 1, -1), 2, 2)
+Z <- diag(c(1, -1))
+gates <- list(I = I, H = H, Z = Z)
+payoffs <- payoffs_list(gates, 1, 0.5, 0.3,0.2, 1.5, 0.6, 0.7, 0.8)
 }

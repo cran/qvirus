@@ -1,29 +1,13 @@
-test_that("estimate_payoffs returns correct output", {
-  library(dplyr)
-  library(earth)
-  library(baguette)
-  library(rules)
-  library(kknn)
-  library(viralmodels)
-  # Load required data
-  data(vl_3)
+test_that("`estimate_payoffs()` works as expected", {
+  set.seed(42)
   data(cd_3)
-  
-  # Create interaction object and classification
-  interaction_obj <- create_interactions(cd_3[,-1], vl_3[,-1])
-  class_obj <- InteractionClassification(interaction_obj$vlogs_diff, interaction_obj$cds_diff)
-  
-  # Prepare predictions
-  traindata <- interaction_obj[c(2, 5)] |> dplyr::as_tibble()
-  target <- "vlogs_diff"
-  pliegues <- 2
-  repeticiones <- 1
-  rejilla <- 2
-  semilla <- 123
-  predictions_df <- viralmodels::viralpreds(target, pliegues, repeticiones, rejilla, semilla, traindata)
-  
-  result <- estimate_payoffs(class_obj, predictions_df)
-  
-  # Use snapshot testing
-  expect_snapshot(result)
+  cd_data <- cd_3[,-1]
+  cd_result <- cds_diff(cd_data)
+  data(vl_3)
+  vl_data <- vl_3[,-1]
+  vl_result <- vlogs_diff(vl_data)
+  result <- InteractionClassification(cd_result = cd_result, vl_result = vl_result)
+  data(preds)
+  payoffs_results <- estimate_payoffs(result, preds)
+  expect_snapshot(payoffs_results)
 })

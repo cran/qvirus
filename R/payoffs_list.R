@@ -1,42 +1,28 @@
-#' Generate Payoff List Based on Quantum Gates and Parameters
+#' Compute Payoff Values for Quantum HIV Phenotype Interactions
 #'
-#' This function generates a list of payoffs for different combinations of quantum gate matrices.
-#' The payoffs are computed for two sets of parameters, where each set defines different values 
-#' for the phenotype payoffs (v and V) in the quantum game model. The names of the payoffs are 
-#' dynamically generated based on the provided gate names.
+#' Computes payoff values for all pairwise combinations of quantum gate strategies provided in
+#' a named list. For each pair, the function calculates the payoffs for both phenotypes `v` and `V`
+#' using two different sets of payoff parameters.
 #'
-#' @param gates A named list of gate matrices. Each element of the list is a quantum gate matrix 
-#'   (e.g., T, X, Id, H, Z, S, Y). The names of the list elements are used to create payoff names dynamically.
-#' @param alpha Numeric value for the first parameter set, defining payoff for v×v.
-#' @param beta Numeric value for the first parameter set, defining payoff for v×V.
-#' @param gamma Numeric value for the first parameter set, defining payoff for V×v.
-#' @param theta Numeric value for the first parameter set, defining payoff for V×V.
-#' @param alpha2 Numeric value for the second parameter set, defining payoff for v×v.
-#' @param beta2 Numeric value for the second parameter set, defining payoff for v×V.
-#' @param gamma2 Numeric value for the second parameter set, defining payoff for V×v.
-#' @param theta2 Numeric value for the second parameter set, defining payoff for V×V.
+#' @param gates A named list of 2x2 unitary matrices representing quantum strategies (e.g., I, H, Z).
+#' @param alpha Numeric scalar, payoff coefficient for phenotype `v` when both play `0`.
+#' @param beta Numeric scalar, payoff coefficient for phenotype `v` when `v` plays `0`, `V` plays `1`.
+#' @param gamma Numeric scalar, payoff coefficient for phenotype `v` when `v` plays `1`, `V` plays `0`.
+#' @param theta Numeric scalar, payoff coefficient for phenotype `v` and `V` when both play `1`.
+#' @param alpha2 Numeric scalar, alternate value of \code{alpha} for phenotype `v` in a second scenario.
+#' @param beta2 Numeric scalar, alternate value of \code{beta} for phenotype `v` in a second scenario.
+#' @param gamma2 Numeric scalar, alternate value of \code{gamma} for phenotype `v` in a second scenario.
+#' @param theta2 Numeric scalar, alternate value of \code{theta} for phenotype `v` in a second scenario.
 #'
-#' @return A list of payoffs where the list names correspond to the gate combinations, 
-#'   and the values represent the computed payoffs based on the input parameters and gate matrices.
 #' @export
 #'
 #' @examples
-#' library(qsimulatR)
-#' gates <- list(
-#'   T = Tgate(2),
-#'   X = X(2),
-#'   Id = Id(2),
-#'   H = H(2),
-#'   Z = Z(2),
-#'   S = S(2),
-#'   Y = Y(2)
-#' )
-#' alpha <- 0.5; beta <- 0.2; gamma <- 0.3; theta <- 0.1
-#' alpha2 <- 0.6; beta2 <- 0.25; gamma2 <- 0.35; theta2 <- 0.15
-#' payoffs_list <- payoffs_list(gates, alpha, beta, gamma, theta, alpha2, beta2, gamma2, theta2)
-#' print(payoffs_list)
+#' I <- diag(2)
+#' H <- 1 / sqrt(2) * matrix(c(1, 1, 1, -1), 2, 2)
+#' Z <- diag(c(1, -1))
+#' gates <- list(I = I, H = H, Z = Z)
+#' payoffs <- payoffs_list(gates, 1, 0.5, 0.3,0.2, 1.5, 0.6, 0.7, 0.8)
 payoffs_list <- function(gates, alpha, beta, gamma, theta, alpha2, beta2, gamma2, theta2) {
-  
   # Ensure the gates input is a named list for easy access
   if (!is.list(gates) || is.null(names(gates))) {
     stop("Gates must be a named list of matrices.")
@@ -49,23 +35,23 @@ payoffs_list <- function(gates, alpha, beta, gamma, theta, alpha2, beta2, gamma2
   for (gate1_name in names(gates)) {
     for (gate2_name in names(gates)) {
       
-      # Create dynamic names for phenotypes v and V for each gate combination
-      v_name <- paste("v", gate1_name, gate2_name, sep = "_")
-      V_name <- paste("V", gate1_name, gate2_name, sep = "_")
+      g1 <- gates[[gate1_name]]
+      g2 <- gates[[gate2_name]]
       
-      # Compute the payoffs for the given gate matrices
-      pays_list[[v_name]] <- phen_hiv(gates[[gate1_name]]@M, gates[[gate2_name]]@M, alpha, beta, gamma, theta)[3]
-      pays_list[[V_name]] <- phen_hiv(gates[[gate1_name]]@M, gates[[gate2_name]]@M, alpha, beta, gamma, theta)[4]
+      # Compute for first set of payoffs
+      phen <- phen_hiv(g1, g2, alpha, beta, gamma, theta)
+      pays_list[[paste0("v_", gate1_name, "_", gate2_name)]] <- phen$pi_v
+      pays_list[[paste0("V_", gate1_name, "_", gate2_name)]] <- phen$pi_V
       
-      # Create dynamic names for the second set of parameters (alpha2, beta2, gamma2, theta2)
-      v_name_b <- paste("v", gate1_name, gate2_name, "b", sep = "_")
-      V_name_b <- paste("V", gate1_name, gate2_name, "b", sep = "_")
-      
-      # Compute the payoffs for the second set of parameters
-      pays_list[[v_name_b]] <- phen_hiv(gates[[gate1_name]]@M, gates[[gate2_name]]@M, alpha2, beta2, gamma2, theta2)[3]
-      pays_list[[V_name_b]] <- phen_hiv(gates[[gate1_name]]@M, gates[[gate2_name]]@M, alpha2, beta2, gamma2, theta2)[4]
+      # Compute for second set of payoffs
+      phen_b <- phen_hiv(g1, g2, alpha2, beta2, gamma2, theta2)
+      pays_list[[paste0("v_", gate1_name, "_", gate2_name, "_b")]] <- phen_b$pi_v
+      pays_list[[paste0("V_", gate1_name, "_", gate2_name, "_b")]] <- phen_b$pi_V
     }
   }
   
+  class(pays_list) <- c("QuantumPayoffs", "list")
+  
   return(pays_list)
+  
 }

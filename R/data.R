@@ -93,3 +93,72 @@
 #'
 #' @source Clinical data from Hospital Vicente Guerrero, IMSS, HIV Clinic.
 "vl_3"
+
+
+#' Quantum Phenotype Interactions in HIV Model
+#'
+#' The `qphen` dataset contains 176 observations and 24 variables, representing classified phenotype interactions in a quantum game-theoretic model of HIV phenotypes.
+#' The data includes CD4 and viral load differences, quantum game strategies, classification clusters, and tuberculosis/genoresistance indicators.
+#'
+#' @format A data frame with 176 rows and 24 variables:
+#' \describe{
+#'   \item{id}{(double) Unique identifier for each observation.}
+#'   \item{vl_diff}{(double) Difference in viral load (log scale) between time points.}
+#'   \item{cd_diff}{(double) Difference in CD4 count between time points.}
+#'   \item{vlogs_diff_mean}{(double) Mean difference of viral loads across the dataset.}
+#'   \item{cds_diff_mean}{(double) Mean difference of CD4 counts across the dataset.}
+#'   \item{n}{(double) Number of cases in each interaction cluster.}
+#'   \item{payoffs}{(double) Computed payoff for the phenotype interaction.}
+#'   #'   \item{payoffs_b}{(double) Alternative computed payoff.}
+#'   \item{nearest_payoff}{(double) Closest estimated payoff value.}
+#'   \item{classification_2}{(double) Cluster assignment for phenotype interactions (second clustering method).}
+#'   \item{classification_3}{(double) Cluster assignment for phenotype interactions (third clustering method).}
+#'   \item{classification_4}{(double) Cluster assignment for phenotype interactions (fourth clustering method).}
+#'   \item{phen_1}{(double) Phenotype type (`v` or `V`).}
+#'   \item{str1_2}{(double) Strategy of the first phenotype using `X`, `T`, or `H` gate (binary encoding).}
+#'   \item{str1_3}{(double) Alternative strategy of the first phenotype.}
+#'   \item{str2_2}{(double) Strategy of the second phenotype using `H`, `Id`, `S`, `T`, `X`, `Y`, or `Z` gate (binary encoding).}
+#'   \item{str2_3}{(double) Alternative strategy of the second phenotype.}
+#'   \item{str2_4}{(double) Alternative strategy of the second phenotype.}
+#'   \item{str2_5}{(double) Alternative strategy of the second phenotype.}
+#'   \item{str2_6}{(double) Alternative strategy of the second phenotype.}
+#'   \item{str2_7}{(double) Alternative strategy of the second phenotype.}
+#'   \item{batch_1}{(double) Indicates whether predictions were made on full data or batch data.}
+#'   \item{TB_1}{(double) Indicator for tuberculosis presence (1 = TB, 0 = no TB).}
+#'   \item{GR_1}{(double) Indicator for genoresistance presence (1 = resistant, 0 = non-resistant).}
+#' }
+#'
+#' @usage data(qphen)
+#'
+#' @keywords datasets
+#'
+#' @examples
+#' data(qphen)
+#' head(qphen)
+"qphen"
+
+
+#' Predictions for Longitudinal Viral Load Values for HIV Patients (2018-2024)
+#'
+#' @description Contains predictions of longitudinal viral load values for 176 
+#' patients from 2018 to 2024. 
+#'
+#' @examples
+#' data(preds)
+#' head(preds)
+#'
+#' @source Clinical data from Hospital Vicente Guerrero, IMSS, HIV Clinic.
+"preds"
+
+
+#' Batched Predictions for Longitudinal Viral Load Values for HIV Patients (2018-2024)
+#'
+#' @description Contains batched predictions of longitudinal viral load values for 176 
+#' patients from 2018 to 2024. 
+#'
+#' @examples
+#' data(preds2)
+#' head(preds2)
+#'
+#' @source Clinical data from Hospital Vicente Guerrero, IMSS, HIV Clinic.
+"preds2"

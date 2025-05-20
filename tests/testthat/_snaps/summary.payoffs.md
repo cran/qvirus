@@ -3,11 +3,9 @@
     Code
       summary(payoffs_results)
     Output
-      # A tibble: 4 x 5
-        classification vlogs_diff_mean cds_diff_mean payoff_mean     n
-                 <int>           <dbl>         <dbl>       <dbl> <int>
-      1              1         -3.04          0.771       -1.52     12
-      2              2         -0.0139       -0.0340      -0.222   119
-      3              3          0.392         1.30        -0.618    11
-      4              4         -1.15          0.210       -0.604    34
+        classification cds_diff_mean vlogs_diff_mean payoff_mean   n
+      1              1    0.77067417     -3.03921454  -0.3883713  12
+      2              2   -0.03403323     -0.01390778  -0.4243554 119
+      3              3    1.29949197      0.39208856  -0.3001637  11
+      4              4    0.21048746     -1.14641183  -0.4214728  34
 

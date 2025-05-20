@@ -19,18 +19,12 @@ phen_hiv(strategy1, strategy2, alpha, beta, gamma, theta)
 
 \item{theta}{A numeric value representing the payoff for outcome |11>.}
 }
-\value{
-A list containing the final quantum state (\code{final_state}), the payoffs
-for each basis state (\code{payoffs}), and the expected payoffs for player 1 (\code{pi_v})
-and player 2 (\code{pi_V}).
-}
 \description{
 This function calculates the final quantum state and expected payoffs for two
 players in a quantum game based on their strategies. The function uses quantum
 gates and unitary transformations to simulate the game dynamics.
 }
 \examples{
-library(qsimulatR)
 strategy1 <- diag(2) # Identity matrix for strategy 1
 strategy2 <- diag(2) # Identity matrix for strategy 2
 alpha <- 1
@@ -38,7 +32,6 @@ beta <- 0.5
 gamma <- 2
 theta <- 0.1
 result <- phen_hiv(strategy1, strategy2, alpha, beta, gamma, theta)
-print(result)
 
 }
 \references{

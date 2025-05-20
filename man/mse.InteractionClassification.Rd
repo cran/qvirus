@@ -2,16 +2,18 @@
 % Please edit documentation in R/mse.InteractionClassification.R
 \name{mse.InteractionClassification}
 \alias{mse.InteractionClassification}
-\title{Mean Squared Errors method for the InteractionClassification class}
+\title{Mean Squared Errors for Interaction Classification}
 \usage{
 \method{mse}{InteractionClassification}(object, ...)
 }
 \arguments{
-\item{object}{An object of class \code{InteractionClassification}.}
+\item{object}{An object of class \code{InteractionClassification} containing
+the classified data and clustering results.}
 
-\item{...}{Additional arguments (currently not used).}
+\item{...}{Additional arguments passed to other methods (currently not used).}
 }
 \description{
-This method computes the mean squared errors (MSE) for viral load and CD4 differences
-based on the classification results from an InteractionClassification object.
+Mean squared errors (MSE) for viral load differences
+and CD4 count differences by comparing the actual values with the group means
+from the classification.
 }
